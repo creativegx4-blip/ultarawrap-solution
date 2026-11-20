@@ -1,0 +1,237 @@
+{
+  "entities": {
+    "Customer": {
+      "title": "Customer",
+      "description": "Authenticated customer profile and wishlist.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID of the customer" },
+        "fullName": { "type": "string", "description": "Customer full name" },
+        "email": { "type": "string", "description": "Customer verified email address" },
+        "mobileNumber": { "type": "string", "description": "Customer mobile number" },
+        "companyName": { "type": "string", "description": "Optional business/company name" },
+        "gstNumber": { "type": "string", "description": "Optional customer GSTIN" },
+        "wishlistProductIds": { "type": "array", "description": "List of saved product IDs" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp" }
+      },
+      "required": ["userId", "fullName", "email", "mobileNumber", "createdAt", "updatedAt"]
+    },
+    "Address": {
+      "title": "Address",
+      "description": "Customer delivery address.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "label": { "type": "string" },
+        "recipientName": { "type": "string" },
+        "mobileNumber": { "type": "string" },
+        "addressLine": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "pincode": { "type": "string" },
+        "defaultAddress": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "label", "recipientName", "mobileNumber", "addressLine", "city", "state", "pincode", "defaultAddress", "createdAt", "updatedAt"]
+    },
+    "CartItem": {
+      "title": "CartItem",
+      "description": "Item in customer shopping cart.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "unit": { "type": "string" },
+        "unitPrice": { "type": "number" },
+        "quantity": { "type": "integer" },
+        "drawableKey": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "productId", "productName", "unit", "unitPrice", "quantity", "updatedAt"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized administrator role record.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin"] },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "displayName", "role", "active", "createdAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Packaging product category.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "sortOrder": { "type": "integer" },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "description", "sortOrder", "active", "createdAt", "updatedAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Dynamic packaging product managed by Admin.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "categoryName": { "type": "string" },
+        "description": { "type": "string" },
+        "priceInr": { "type": "number" },
+        "unit": { "type": "string" },
+        "stockQty": { "type": "integer" },
+        "sku": { "type": "string" },
+        "drawableKey": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "active": { "type": "boolean" },
+        "featured": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "categoryId", "categoryName", "description", "priceInr", "unit", "stockQty", "sku", "active", "featured", "createdAt", "updatedAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order and tracking status.",
+      "type": "object",
+      "properties": {
+        "orderNumber": { "type": "string" },
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerMobile": { "type": "string" },
+        "deliveryAddress": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "pincode": { "type": "string" },
+        "orderNotes": { "type": "string" },
+        "paymentMethod": { "type": "string", "enum": ["Cash on Delivery", "Bank Transfer", "UPI", "Contact for Payment"] },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["PROCESSING", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderNumber", "userId", "customerName", "customerEmail", "customerMobile", "deliveryAddress", "city", "state", "pincode", "paymentMethod", "items", "subtotal", "discount", "totalAmount", "status", "createdAt", "updatedAt"]
+    },
+    "Book": {
+      "title": "Book",
+      "description": "Admin accounting book for direct billing.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "description": { "type": "string" },
+        "invoiceCount": { "type": "integer" },
+        "totalBilled": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "code", "invoiceCount", "totalBilled", "createdAt", "updatedAt"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "Admin direct book billing invoice.",
+      "type": "object",
+      "properties": {
+        "invoiceNumber": { "type": "string" },
+        "bookId": { "type": "string" },
+        "bookName": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerMobile": { "type": "string" },
+        "customerAddress": { "type": "string" },
+        "customerGst": { "type": "string" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "gstPercent": { "type": "number" },
+        "gstAmount": { "type": "number" },
+        "grandTotal": { "type": "number" },
+        "paymentStatus": { "type": "string", "enum": ["PAID", "PENDING", "PARTIAL"] },
+        "notes": { "type": "string" },
+        "createdByUid": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["invoiceNumber", "bookId", "bookName", "customerName", "customerMobile", "items", "subtotal", "discount", "gstPercent", "gstAmount", "grandTotal", "paymentStatus", "createdByUid", "createdAt", "updatedAt"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Company branding, WhatsApp, GST, and invoice configuration.",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string" },
+        "tagline": { "type": "string" },
+        "companyEmail": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "contactNumber": { "type": "string" },
+        "gstNumber": { "type": "string" },
+        "companyAddress": { "type": "string" },
+        "invoiceFooter": { "type": "string" },
+        "currencySymbol": { "type": "string" },
+        "defaultGstPercent": { "type": "number" },
+        "catalogSeeded": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["companyName", "tagline", "companyEmail", "whatsappNumber", "contactNumber", "gstNumber", "companyAddress", "invoiceFooter", "currencySymbol", "defaultGstPercent", "catalogSeeded", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/customers/{userId}": {
+      "schema": { "$ref": "#/entities/Customer" },
+      "description": "Customer profiles isolated per authenticated user or admin."
+    },
+    "/customers/{userId}/addresses/{addressId}": {
+      "schema": { "$ref": "#/entities/Address" },
+      "description": "Saved customer delivery addresses."
+    },
+    "/customers/{userId}/cart/{itemId}": {
+      "schema": { "$ref": "#/entities/CartItem" },
+      "description": "Customer shopping cart items."
+    },
+    "/admin_users/{adminKey}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Authorized admin role registry."
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Product categories."
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Official packaging products managed dynamically by Admin."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders and tracking statuses."
+    },
+    "/books/{bookId}": {
+      "schema": { "$ref": "#/entities/Book" },
+      "description": "Admin accounting books."
+    },
+    "/invoices/{invoiceId}": {
+      "schema": { "$ref": "#/entities/Invoice" },
+      "description": "Admin direct book billing invoices."
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/Settings" },
+      "description": "Company configuration and WhatsApp number."
+    }
+  }
+}

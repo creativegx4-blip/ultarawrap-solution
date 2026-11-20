@@ -1,0 +1,6 @@
+{
+  "name": "UltraWrap",
+  "description": "ULTRAWRAP SOLUTION industrial packaging catalog, customer ordering, WhatsApp enquiry, and admin direct book billing app.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
